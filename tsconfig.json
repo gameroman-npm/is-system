@@ -1,0 +1,7 @@
+{
+  "extends": "@gameroman/config/ts/isolated",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src"]
+}
