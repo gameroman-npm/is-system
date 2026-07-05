@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
-import process from "node:process";
 
+import { fileContains } from "./is-docker";
 import { isInsideContainer } from "./is-inside-container";
 
 function isWsl(): boolean {
@@ -13,16 +13,9 @@ function isWsl(): boolean {
     return !isInsideContainer();
   }
 
-  try {
-    if (
-      fs
-        .readFileSync("/proc/version", "utf8")
-        .toLowerCase()
-        .includes("microsoft")
-    ) {
-      return !isInsideContainer();
-    }
-  } catch {}
+  if (fileContains("/proc/version", "microsoft")) {
+    return !isInsideContainer();
+  }
 
   if (
     fs.existsSync("/proc/sys/fs/binfmt_misc/WSLInterop") ||

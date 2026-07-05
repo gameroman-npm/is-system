@@ -1,27 +1,8 @@
 import fs from "node:fs";
 
-function hasDockerEnv() {
+function fileContains(filePath: string, str: string): boolean {
   try {
-    fs.statSync("/.dockerenv");
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function hasDockerCGroup() {
-  try {
-    return fs.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
-  } catch {
-    return false;
-  }
-}
-
-function hasDockerMountInfo() {
-  try {
-    return fs
-      .readFileSync("/proc/self/mountinfo", "utf8")
-      .includes("/docker/containers/");
+    return fs.readFileSync(filePath, "utf8").toLowerCase().includes(str);
   } catch {
     return false;
   }
@@ -29,8 +10,11 @@ function hasDockerMountInfo() {
 
 let result: boolean | undefined;
 function isDocker(): boolean {
-  result ??= hasDockerEnv() || hasDockerCGroup() || hasDockerMountInfo();
+  result ??=
+    fs.existsSync("/.dockerenv") ||
+    fileContains("/proc/self/cgroup", "docker") ||
+    fileContains("/proc/self/mountinfo", "/docker/containers/");
   return result;
 }
 
-export { isDocker };
+export { isDocker, fileContains };
