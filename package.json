@@ -30,5 +30,8 @@
     "oxlint-tsgolint": "0.24.0",
     "tsdown": "0.22.3",
     "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
