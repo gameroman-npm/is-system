@@ -1,6 +1,6 @@
 {
   "name": "is-system",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "author": "gameroman",
   "repository": {
@@ -16,7 +16,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "test": "bun test",
+    "test": "node --test --experimental-test-module-mocks",
     "lint": "oxlint",
     "format": "oxfmt",
     "build": "tsdown",
