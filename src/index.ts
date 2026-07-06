@@ -1,9 +1,9 @@
 import fs from "node:fs";
 import os from "node:os";
 
-function fileContains(filePath: string, str: string): boolean {
+function procContains(proc: string, str: string): boolean {
   try {
-    return fs.readFileSync(filePath, "utf8").toLowerCase().includes(str);
+    return fs.readFileSync(`/proc/${proc}`, "utf8").toLowerCase().includes(str);
   } catch {
     return false;
   }
@@ -16,8 +16,8 @@ let docker: boolean | undefined,
 function isDocker(): boolean {
   return (docker ??=
     fs.existsSync("/.dockerenv") ||
-    fileContains("/proc/self/cgroup", "docker") ||
-    fileContains("/proc/self/mountinfo", "/docker/containers/"));
+    procContains("self/cgroup", "docker") ||
+    procContains("self/mountinfo", "/docker/containers/"));
 }
 
 function isInsideContainer(): boolean {
@@ -25,13 +25,10 @@ function isInsideContainer(): boolean {
 }
 
 function isWsl(): boolean {
-  if (process.platform !== "linux") {
-    return false;
-  }
-
   return (wsl ??=
+    process.platform === "linux" &&
     (os.release().toLowerCase().includes("microsoft") ||
-      fileContains("/proc/version", "microsoft") ||
+      procContains("version", "microsoft") ||
       fs.existsSync("/proc/sys/fs/binfmt_misc/WSLInterop") ||
       fs.existsSync("/run/WSL")) &&
     !isInsideContainer());
