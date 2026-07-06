@@ -10,7 +10,7 @@ afterEach(() => {
 await describe("isInsideContainer", () => {
   void test("inside a container", async () => {
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         existsSync: (path: string) => path === "/run/.containerenv",
       },
     });

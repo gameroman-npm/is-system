@@ -20,7 +20,7 @@ await describe("isWsl", () => {
     Object.defineProperty(process, "platform", { value: "linux" });
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         readFileSync: () =>
           "Linux version 3.4.0-Microsoft (Microsoft@Microsoft.com) (gcc version 4.7 (GCC) ) #1 SMP PREEMPT Wed Dec 31 14:42:53 PST 2014",
         existsSync: () => false,
@@ -35,7 +35,7 @@ await describe("isWsl", () => {
     Object.defineProperty(process, "platform", { value: "linux" });
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         readFileSync: () =>
           "Linux version 4.19.43-microsoft-standard (oe-user@oe-host) (gcc version 7.3.0 (GCC)) #1 SMP Mon May 20 19:35:22 UTC 2019",
         existsSync: () => false,
@@ -57,14 +57,14 @@ await describe("isWsl", () => {
     Object.defineProperty(process, "platform", { value: "linux" });
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         readFileSync: () =>
           "Linux version 4.19.43-standard (oe-user@oe-host) (gcc version 7.3.0 (GCC)) #1 SMP Mon May 20 19:35:22 UTC 2019",
         existsSync: () => false,
       },
     });
     mock.module("node:os", {
-      exports: {
+      namedExports: {
         release: () => "",
       },
     });
@@ -77,7 +77,7 @@ await describe("isWsl", () => {
     Object.defineProperty(process, "platform", { value: "linux" });
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         readFileSync: () =>
           "Linux version 6.1.0-custom (user@host) (gcc version 12.2.0) #1 SMP PREEMPT_DYNAMIC Mon Jan 1 00:00:00 UTC 2024",
         existsSync: (path: string) =>
@@ -85,7 +85,7 @@ await describe("isWsl", () => {
       },
     });
     mock.module("node:os", {
-      exports: {
+      namedExports: {
         release: () => "6.1.0-custom",
       },
     });
@@ -98,14 +98,14 @@ await describe("isWsl", () => {
     Object.defineProperty(process, "platform", { value: "linux" });
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         readFileSync: () =>
           "Linux version 6.1.0-custom (user@host) (gcc version 12.2.0) #1 SMP PREEMPT_DYNAMIC Mon Jan 1 00:00:00 UTC 2024",
         existsSync: (path: string) => path === "/run/WSL",
       },
     });
     mock.module("node:os", {
-      exports: {
+      namedExports: {
         release: () => "6.1.0-custom",
       },
     });
@@ -118,14 +118,14 @@ await describe("isWsl", () => {
     Object.defineProperty(process, "platform", { value: "linux" });
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         readFileSync: () =>
           "Linux version 4.19.43-microsoft-standard (oe-user@oe-host) (gcc version 7.3.0 (GCC)) #1 SMP Mon May 20 19:35:22 UTC 2019",
         existsSync: (path: string) => path === "/run/.containerenv",
       },
     });
     mock.module("node:os", {
-      exports: {
+      namedExports: {
         release: () => "microsoft",
       },
     });

@@ -10,7 +10,7 @@ afterEach(() => {
 await describe("isDocker", () => {
   void test("detects Docker via /.dockerenv", async () => {
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         existsSync: (path: string) => path === "/.dockerenv",
         readFileSync: () => {
           throw new Error("ENOENT");
@@ -24,7 +24,7 @@ await describe("isDocker", () => {
 
   void test("detects Docker via /proc/self/cgroup", async () => {
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         existsSync: () => false,
         readFileSync: (path: string) => {
           if (path === "/proc/self/cgroup") {
@@ -41,7 +41,7 @@ await describe("isDocker", () => {
 
   void test("detects Docker via /proc/self/mountinfo", async () => {
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         existsSync: () => false,
         readFileSync: (path: string) => {
           if (path === "/proc/self/mountinfo") {
@@ -61,7 +61,7 @@ await describe("isDocker", () => {
 
   void test("not inside Docker container", async () => {
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         existsSync: () => false,
         readFileSync: () => {
           throw new Error("ENOENT");
@@ -78,7 +78,7 @@ await describe("isDocker", () => {
     let readFileSyncCallCount = 0;
 
     mock.module("node:fs", {
-      exports: {
+      namedExports: {
         existsSync: () => {
           existsSyncCallCount++;
           return false;
