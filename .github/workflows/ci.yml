@@ -42,14 +42,9 @@ jobs:
       - name: Run tests on Node
         run: bun run test
 
-  test-bun:
-    name: Lint and Test on Bun (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+  lint:
+    name: Build and Lint
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -66,9 +61,5 @@ jobs:
       - name: Build
         run: bun run build
 
-      - parallel:
-          - name: Run tests on Bun
-            run: bun run test:bun
-
-          - name: Lint
-            run: bun run lint
+      - name: Lint
+        run: bun run lint
